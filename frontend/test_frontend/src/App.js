@@ -28,7 +28,7 @@ function App() {
   let [signout_response, setSignOutResponse] = useState('');
 
   const apiSignUpOnClick = () => {
-    fetch('/api/auth/signUp', {
+    fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ username, password, avatar, is_admin }),
@@ -45,7 +45,7 @@ function App() {
   const apiSignInOnClick = () => {
     axios
       .post(
-        `/api/auth/signIn`,
+        `/api/auth/login`,
         { username, password, avatar: 'test_avatar', is_admin: true },
         { withCredentials: true },
       )
@@ -55,14 +55,14 @@ function App() {
 
   const apiUpdateClick = () => {
     axios
-      .post(`/api/auth/update`, {}, { withCredentials: true })
+      .post(`/api/auth/refresh`, {}, { withCredentials: true })
       .then((res) => setUpdateResponse(res.data))
       .catch((error) => setUpdateResponse(error.message));
   };
 
   const apiSignOutClick = () => {
     axios
-      .post(`/api/auth/signOut`, {}, { withCredentials: true })
+      .post(`/api/auth/logout`, {}, { withCredentials: true })
       .then((res) => setSignOutResponse(res.data))
       .catch((error) => setSignOutResponse(error.message));
   };
@@ -74,7 +74,7 @@ function App() {
       <button onClick={(e) => apiOnClick(e)}>/api</button>
       <button onClick={(e) => apiHealthOnClick(e)}>/api/health</button>
       <div>
-        <h3>sign up</h3>
+        <h3>/api/auth/register</h3>
         <div>
           <input
             onChange={(e) => setUsername(e.target.value)}
@@ -103,7 +103,7 @@ function App() {
       </div>
 
       <div>
-        <h3>sign in</h3>
+        <h3>/api/auth/login</h3>
         <div>
           <input
             onChange={(e) => setUsername(e.target.value)}
@@ -125,13 +125,13 @@ function App() {
       </div>
 
       <div>
-        <h3>update</h3>
+        <h3>/api/auth/refresh</h3>
         <pre>{JSON.stringify({ update_response }, null, 2)}</pre>
         <button onClick={(e) => apiUpdateClick(e)}>apiUpdateClick</button>
       </div>
 
       <div>
-        <h3>signOut</h3>
+        <h3>/api/auth/logout</h3>
         <pre>{JSON.stringify({ signout_response }, null, 2)}</pre>
         <button onClick={(e) => apiSignOutClick(e)}>apiSignOutClick</button>
       </div>

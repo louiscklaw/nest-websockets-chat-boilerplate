@@ -22,7 +22,7 @@ import { LoginUserDto } from 'src/user/dto/login-user.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signUp')
+  @Post('/register')
   async singUp(
     @Body() userDto: CreateUserDto,
     @Res({ passthrough: true }) res: Response,
@@ -44,7 +44,7 @@ export class AuthController {
     return tokens;
   }
 
-  @Post('/signIn')
+  @Post('/login')
   @UseGuards(LocalAuthGuard)
   async singIn(
     @Body() userDto: LoginUserDto,
@@ -60,7 +60,7 @@ export class AuthController {
     return tokens;
   }
 
-  @Post('/update')
+  @Post('/refresh')
   async updateTokens(@Req() req: Request) {
     const { refreshToken } = req.cookies;
 
@@ -73,7 +73,7 @@ export class AuthController {
     return accessToken;
   }
 
-  @Post('/signOut')
+  @Post('/logout')
   async signOut(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
