@@ -15,8 +15,8 @@ POST http://localhost/api/auth/signUp
 content-type: application/json
 
 {
-  "username": "string",
-  "password": "string",
-  "avatar": "string",
+  "username": "user1",
+  "password": "Aa1234567",
+  "avatar": "avatar.jpg",
   "is_admin": true
 }
