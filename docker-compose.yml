@@ -15,8 +15,6 @@ services:
       - DATABASE_URL=postgres://postgres:pass123@db:5432/postgres?sslmode=disable
     ports:
       - '8081:8081'
-    depends_on:
-      - db
 
   api:
     image: node:16-buster
@@ -37,8 +35,6 @@ services:
     volumes:
       - ./backend:/app
     command: bash -c "yarn --dev && yarn start:dev"
-    depends_on:
-      - db
 
   test_frontend:
     image: node:16-buster
@@ -52,16 +48,20 @@ services:
     volumes:
       - ./frontend/test_frontend:/app
     command: bash -c "yarn start"
-    depends_on:
-      - api
+
+  nextjs_frontend:
+    image: node:16-buster
+    ports:
+      - 3005:3005
+    environment:
+      - PORT=3005
+    working_dir: /app
+    volumes:
+      - ./frontend/nextjs_frontend:/app
+    command: yarn dev
 
   proxy:
     build: reverse-proxy
     restart: always
     ports:
       - 80:80
-    depends_on:
-      - db
-      - pgweb
-      - api
-      - test_frontend
