@@ -1,0 +1,51 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pass123
+
+  pgweb:
+    restart: always
+    image: sosedoff/pgweb
+    environment:
+      - DATABASE_URL=postgres://postgres:pass123@db:5432/postgres?sslmode=disable
+    ports:
+      - '8081:8081'
+    depends_on:
+      - db
+
+  api:
+    image: node:16-buster
+    ports:
+      - 3002:3000
+    working_dir: /app
+    environment:
+      - DEBUG=1
+      - JWT_ACCESS_SECRET=ACCESS_SECRET
+      - JWT_REFRESH_SECRET=REFRESH_SECRET
+      - JWT_ACCESS_EXPIRE=60m
+      - JWT_REFRESH_EXPIRE=30d
+      - DB_NAME=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASS=pass123
+    volumes:
+      - ./backend:/app
+    command: bash -c "yarn --dev && yarn start:dev"
+    depends_on:
+      - db
+
+  proxy:
+    build: reverse-proxy
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - db
+      - pgweb
+      - api
