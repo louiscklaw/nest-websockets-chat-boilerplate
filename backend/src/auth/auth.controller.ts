@@ -72,4 +72,14 @@ export class AuthController {
 
     return accessToken;
   }
+
+  @Post('/signOut')
+  async signOut(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    res.cookie('refreshToken', '');
+
+    return {};
+  }
 }
