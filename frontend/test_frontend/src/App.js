@@ -6,6 +6,7 @@ function App() {
       .then((res) => res.json())
       .then((res_json) => console.log({ res_json }));
   };
+
   const apiHealthOnClick = () => {
     fetch('/api/health')
       .then((res) => res.json())
