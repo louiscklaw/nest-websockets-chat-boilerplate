@@ -24,6 +24,7 @@ $ yarn install
 ```
 
 ## Example of .env file
+
 ```bash
 JWT_ACCESS_SECRET=ACCESS_SECRET
 JWT_REFRESH_SECRET=REFRESH_SECRET
@@ -45,4 +46,3 @@ $ docker-compose up
 # development
 $ yarn run start
 ```
-
