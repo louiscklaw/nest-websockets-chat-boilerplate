@@ -1,9 +1,18 @@
-version: "3"
+version: '3'
 services:
   db:
-    image:  postgres
+    image: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_PASSWORD: pass123
+
+  pgweb:
+    container_name: pgweb
+    restart: always
+    image: sosedoff/pgweb
+    environment:
+      - DATABASE_URL=postgres://postgres:pass123@db:5432/postgres?sslmode=disable
+    ports:
+      - '8081:8081'
