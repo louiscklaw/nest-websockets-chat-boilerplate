@@ -12,4 +12,4 @@ docker compose up -d test_frontend
 
 docker compose up -d
 
-docker compose logs -f test_frontend
+docker compose logs -f api
