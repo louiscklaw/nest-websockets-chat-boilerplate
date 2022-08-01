@@ -1,0 +1,8 @@
+###
+GET http://localhost
+
+###
+GET http://localhost/api
+
+###
+GET http://localhost/test_frontend

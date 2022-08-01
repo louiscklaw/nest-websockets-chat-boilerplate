@@ -18,6 +18,17 @@ services:
     depends_on:
       - db
 
+  test_frontend:
+    image: node:16-buster
+    ports:
+      - 3003:3000
+    working_dir: /app
+    volumes:
+      - ./frontend/test_frontend:/app
+    command: bash -c "yarn --dev && yarn start"
+    depends_on:
+      - api
+
   api:
     image: node:16-buster
     ports:
@@ -49,3 +60,4 @@ services:
       - db
       - pgweb
       - api
+      - test_frontend
